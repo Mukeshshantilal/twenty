@@ -18,6 +18,9 @@ export interface MessageFolderDriver {
       | 'handle'
       | 'connectionParameters'
     >,
-    messageChannel: Pick<MessageChannelWorkspaceEntity, 'syncAllFolders'>,
+    messageChannel: Pick<
+      MessageChannelWorkspaceEntity,
+      'syncAllFolders' | 'messageFolderImportPolicy'
+    >,
   ): Promise<MessageFolder[]>;
 }

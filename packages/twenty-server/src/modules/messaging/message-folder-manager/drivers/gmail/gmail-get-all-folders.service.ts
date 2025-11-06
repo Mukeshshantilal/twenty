@@ -7,10 +7,16 @@ import {
 
 import { OAuth2ClientManagerService } from 'src/modules/connected-account/oauth2-client-manager/services/oauth2-client-manager.service';
 import { type ConnectedAccountWorkspaceEntity } from 'src/modules/connected-account/standard-objects/connected-account.workspace-entity';
+import {
+  MessageChannelWorkspaceEntity,
+  MessageFolderImportPolicy,
+} from 'src/modules/messaging/common/standard-objects/message-channel.workspace-entity';
 import { extractGmailFolderName } from 'src/modules/messaging/message-folder-manager/drivers/gmail/utils/extract-gmail-folder-name.util';
 import { getGmailFolderParentId } from 'src/modules/messaging/message-folder-manager/drivers/gmail/utils/get-gmail-folder-parent-id.util';
+import { shouldSyncFolderByDefault } from 'src/modules/messaging/message-folder-manager/utils/should-sync-folder-by-default.util';
 import { MESSAGING_GMAIL_DEFAULT_NOT_SYNCED_LABELS } from 'src/modules/messaging/message-import-manager/drivers/gmail/constants/messaging-gmail-default-not-synced-labels';
 import { GmailMessageListFetchErrorHandler } from 'src/modules/messaging/message-import-manager/drivers/gmail/services/gmail-message-list-fetch-error-handler.service';
+import { StandardFolder } from 'src/modules/messaging/message-import-manager/drivers/types/standard-folder';
 
 @Injectable()
 export class GmailGetAllFoldersService implements MessageFolderDriver {
@@ -21,14 +27,45 @@ export class GmailGetAllFoldersService implements MessageFolderDriver {
     private readonly gmailMessageListFetchErrorHandler: GmailMessageListFetchErrorHandler,
   ) {}
 
-  private isSyncedByDefault(labelId: string): boolean {
-    return !MESSAGING_GMAIL_DEFAULT_NOT_SYNCED_LABELS.includes(labelId);
+  private getStandardFolderFromLabelId(labelId: string): StandardFolder | null {
+    switch (labelId) {
+      case 'INBOX':
+        return StandardFolder.INBOX;
+      case 'DRAFT':
+        return StandardFolder.DRAFTS;
+      case 'SENT':
+        return StandardFolder.SENT;
+      case 'TRASH':
+        return StandardFolder.TRASH;
+      case 'SPAM':
+        return StandardFolder.JUNK;
+      default:
+        return null;
+    }
+  }
+
+  private shouldSyncByDefaultGmail(
+    labelId: string,
+    standardFolder: StandardFolder | null,
+    messageFolderImportPolicy: MessageFolderImportPolicy,
+  ): boolean {
+    // Exclude Gmail-specific labels (categories, chat, etc.)
+    if (MESSAGING_GMAIL_DEFAULT_NOT_SYNCED_LABELS.includes(labelId)) {
+      return false;
+    }
+
+    // Use shared logic for standard folder exclusions and policy
+    return shouldSyncFolderByDefault(standardFolder, messageFolderImportPolicy);
   }
 
   async getAllMessageFolders(
     connectedAccount: Pick<
       ConnectedAccountWorkspaceEntity,
       'provider' | 'refreshToken' | 'accessToken' | 'id' | 'handle'
+    >,
+    messageChannel: Pick<
+      MessageChannelWorkspaceEntity,
+      'syncAllFolders' | 'messageFolderImportPolicy'
     >,
   ): Promise<MessageFolder[]> {
     try {
@@ -76,11 +113,17 @@ export class GmailGetAllFoldersService implements MessageFolderDriver {
           label.name,
           labelNameToIdMap,
         );
+        const standardFolder = this.getStandardFolderFromLabelId(label.id);
+        const isSynced = this.shouldSyncByDefaultGmail(
+          label.id,
+          standardFolder,
+          messageChannel.messageFolderImportPolicy,
+        );
 
         folders.push({
           externalId: label.id,
           name: folderName,
-          isSynced: this.isSyncedByDefault(label.id),
+          isSynced,
           isSentFolder,
           parentFolderId,
         });

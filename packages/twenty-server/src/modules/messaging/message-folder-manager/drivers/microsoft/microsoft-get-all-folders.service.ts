@@ -9,6 +9,8 @@ import {
 
 import { OAuth2ClientManagerService } from 'src/modules/connected-account/oauth2-client-manager/services/oauth2-client-manager.service';
 import { type ConnectedAccountWorkspaceEntity } from 'src/modules/connected-account/standard-objects/connected-account.workspace-entity';
+import { MessageChannelWorkspaceEntity } from 'src/modules/messaging/common/standard-objects/message-channel.workspace-entity';
+import { shouldSyncFolderByDefault } from 'src/modules/messaging/message-folder-manager/utils/should-sync-folder-by-default.util';
 import { MicrosoftMessageListFetchErrorHandler } from 'src/modules/messaging/message-import-manager/drivers/microsoft/services/microsoft-message-list-fetch-error-handler.service';
 import { StandardFolder } from 'src/modules/messaging/message-import-manager/drivers/types/standard-folder';
 
@@ -35,6 +37,10 @@ export class MicrosoftGetAllFoldersService implements MessageFolderDriver {
     connectedAccount: Pick<
       ConnectedAccountWorkspaceEntity,
       'accessToken' | 'refreshToken' | 'id' | 'handle' | 'provider'
+    >,
+    messageChannel: Pick<
+      MessageChannelWorkspaceEntity,
+      'syncAllFolders' | 'messageFolderImportPolicy'
     >,
   ): Promise<MessageFolder[]> {
     try {
@@ -70,7 +76,10 @@ export class MicrosoftGetAllFoldersService implements MessageFolderDriver {
           folder.wellKnownName,
         );
         const isSentFolder = this.isSentFolder(standardFolder);
-        const isSynced = this.shouldSyncByDefault(standardFolder);
+        const isSynced = shouldSyncFolderByDefault(
+          standardFolder,
+          messageChannel.messageFolderImportPolicy,
+        );
 
         folderInfos.push({
           externalId: folder.id,
@@ -101,18 +110,6 @@ export class MicrosoftGetAllFoldersService implements MessageFolderDriver {
 
   private isSentFolder(standardFolder: StandardFolder | null): boolean {
     return standardFolder === StandardFolder.SENT;
-  }
-
-  private shouldSyncByDefault(standardFolder: StandardFolder | null): boolean {
-    if (
-      standardFolder === StandardFolder.JUNK ||
-      standardFolder === StandardFolder.DRAFTS ||
-      standardFolder === StandardFolder.TRASH
-    ) {
-      return false;
-    }
-
-    return true;
   }
 
   private getStandardFolderFromWellKnownName(
