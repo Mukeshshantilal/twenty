@@ -78,8 +78,8 @@ export class MicrosoftGetAllFoldersService implements MessageFolderDriver {
           : null;
         const isSentFolder = this.isSentFolder(standardFolder);
         const isSynced = shouldSyncFolderByDefault(
-          standardFolder,
           messageChannel.messageFolderImportPolicy,
+          standardFolder,
         );
 
         folderInfos.push({

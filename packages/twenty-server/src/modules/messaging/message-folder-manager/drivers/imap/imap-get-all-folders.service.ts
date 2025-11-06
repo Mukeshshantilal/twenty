@@ -85,8 +85,8 @@ export class ImapGetAllFoldersService implements MessageFolderDriver {
       pathToExternalIdMap.set(sentFolder.path, externalId);
 
       const isSynced = shouldSyncFolderByDefault(
-        StandardFolder.SENT,
         messageChannel.messageFolderImportPolicy,
+        StandardFolder.SENT,
       );
 
       folders.push({
@@ -109,8 +109,8 @@ export class ImapGetAllFoldersService implements MessageFolderDriver {
       if (this.isValidMailbox(mailbox, folders)) {
         const standardFolder = getStandardFolderByRegex(mailbox.path);
         const isSynced = shouldSyncFolderByDefault(
-          standardFolder,
           messageChannel.messageFolderImportPolicy,
+          standardFolder,
         );
 
         folders.push({

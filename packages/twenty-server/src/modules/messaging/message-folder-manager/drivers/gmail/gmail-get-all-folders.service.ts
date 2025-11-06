@@ -19,7 +19,6 @@ import { getGmailFolderParentId } from 'src/modules/messaging/message-folder-man
 import { shouldSyncFolderByDefault } from 'src/modules/messaging/message-folder-manager/utils/should-sync-folder-by-default.util';
 import { MESSAGING_GMAIL_DEFAULT_NOT_SYNCED_LABELS } from 'src/modules/messaging/message-import-manager/drivers/gmail/constants/messaging-gmail-default-not-synced-labels';
 import { GmailMessageListFetchErrorHandler } from 'src/modules/messaging/message-import-manager/drivers/gmail/services/gmail-message-list-fetch-error-handler.service';
-import { getStandardFolderByRegex } from 'src/modules/messaging/message-import-manager/drivers/utils/get-standard-folder-by-regex';
 
 @Injectable()
 export class GmailGetAllFoldersService implements MessageFolderDriver {
@@ -41,9 +40,8 @@ export class GmailGetAllFoldersService implements MessageFolderDriver {
     if (MESSAGING_GMAIL_DEFAULT_NOT_SYNCED_LABELS.includes(label.id)) {
       return false;
     }
-    const standardFolder = getStandardFolderByRegex(label.name);
 
-    return shouldSyncFolderByDefault(standardFolder, messageFolderImportPolicy);
+    return shouldSyncFolderByDefault(messageFolderImportPolicy);
   }
 
   async getAllMessageFolders(

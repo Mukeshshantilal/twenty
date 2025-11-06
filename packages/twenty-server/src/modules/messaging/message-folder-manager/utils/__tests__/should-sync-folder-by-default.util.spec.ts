@@ -6,8 +6,8 @@ describe('shouldSyncFolderByDefault', () => {
   describe('when messageFolderImportPolicy is SELECTED_FOLDERS', () => {
     it('should not sync inbox folder by default', () => {
       const result = shouldSyncFolderByDefault(
-        StandardFolder.INBOX,
         MessageFolderImportPolicy.SELECTED_FOLDERS,
+        StandardFolder.INBOX,
       );
 
       expect(result).toBe(false);
@@ -15,8 +15,8 @@ describe('shouldSyncFolderByDefault', () => {
 
     it('should not sync sent folder by default', () => {
       const result = shouldSyncFolderByDefault(
-        StandardFolder.SENT,
         MessageFolderImportPolicy.SELECTED_FOLDERS,
+        StandardFolder.SENT,
       );
 
       expect(result).toBe(false);
@@ -24,7 +24,6 @@ describe('shouldSyncFolderByDefault', () => {
 
     it('should not sync custom folders by default', () => {
       const result = shouldSyncFolderByDefault(
-        null,
         MessageFolderImportPolicy.SELECTED_FOLDERS,
       );
 
@@ -33,8 +32,8 @@ describe('shouldSyncFolderByDefault', () => {
 
     it('should never sync drafts folder even when manually selected', () => {
       const result = shouldSyncFolderByDefault(
-        StandardFolder.DRAFTS,
         MessageFolderImportPolicy.SELECTED_FOLDERS,
+        StandardFolder.DRAFTS,
       );
 
       expect(result).toBe(false);
@@ -42,8 +41,8 @@ describe('shouldSyncFolderByDefault', () => {
 
     it('should never sync trash folder even when manually selected', () => {
       const result = shouldSyncFolderByDefault(
-        StandardFolder.TRASH,
         MessageFolderImportPolicy.SELECTED_FOLDERS,
+        StandardFolder.TRASH,
       );
 
       expect(result).toBe(false);
@@ -51,8 +50,8 @@ describe('shouldSyncFolderByDefault', () => {
 
     it('should never sync junk/spam folder even when manually selected', () => {
       const result = shouldSyncFolderByDefault(
-        StandardFolder.JUNK,
         MessageFolderImportPolicy.SELECTED_FOLDERS,
+        StandardFolder.JUNK,
       );
 
       expect(result).toBe(false);
@@ -62,8 +61,8 @@ describe('shouldSyncFolderByDefault', () => {
   describe('when messageFolderImportPolicy is ALL_FOLDERS', () => {
     it('should sync inbox folder', () => {
       const result = shouldSyncFolderByDefault(
-        StandardFolder.INBOX,
         MessageFolderImportPolicy.ALL_FOLDERS,
+        StandardFolder.INBOX,
       );
 
       expect(result).toBe(true);
@@ -71,8 +70,8 @@ describe('shouldSyncFolderByDefault', () => {
 
     it('should sync sent folder', () => {
       const result = shouldSyncFolderByDefault(
-        StandardFolder.SENT,
         MessageFolderImportPolicy.ALL_FOLDERS,
+        StandardFolder.SENT,
       );
 
       expect(result).toBe(true);
@@ -80,7 +79,6 @@ describe('shouldSyncFolderByDefault', () => {
 
     it('should sync custom folders', () => {
       const result = shouldSyncFolderByDefault(
-        null,
         MessageFolderImportPolicy.ALL_FOLDERS,
       );
 
@@ -89,8 +87,8 @@ describe('shouldSyncFolderByDefault', () => {
 
     it('should NOT sync drafts folder even with ALL_FOLDERS policy', () => {
       const result = shouldSyncFolderByDefault(
-        StandardFolder.DRAFTS,
         MessageFolderImportPolicy.ALL_FOLDERS,
+        StandardFolder.DRAFTS,
       );
 
       expect(result).toBe(false);
@@ -98,8 +96,8 @@ describe('shouldSyncFolderByDefault', () => {
 
     it('should NOT sync trash folder even with ALL_FOLDERS policy', () => {
       const result = shouldSyncFolderByDefault(
-        StandardFolder.TRASH,
         MessageFolderImportPolicy.ALL_FOLDERS,
+        StandardFolder.TRASH,
       );
 
       expect(result).toBe(false);
@@ -107,8 +105,8 @@ describe('shouldSyncFolderByDefault', () => {
 
     it('should NOT sync junk/spam folder even with ALL_FOLDERS policy', () => {
       const result = shouldSyncFolderByDefault(
-        StandardFolder.JUNK,
         MessageFolderImportPolicy.ALL_FOLDERS,
+        StandardFolder.JUNK,
       );
 
       expect(result).toBe(false);
@@ -119,12 +117,12 @@ describe('shouldSyncFolderByDefault', () => {
     describe('Microsoft Outlook user', () => {
       it('should sync inbox and sent with ALL_FOLDERS policy', () => {
         const inboxResult = shouldSyncFolderByDefault(
-          StandardFolder.INBOX,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.INBOX,
         );
         const sentResult = shouldSyncFolderByDefault(
-          StandardFolder.SENT,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.SENT,
         );
 
         expect(inboxResult).toBe(true);
@@ -133,8 +131,8 @@ describe('shouldSyncFolderByDefault', () => {
 
       it('should not sync deleted items (trash) folder', () => {
         const result = shouldSyncFolderByDefault(
-          StandardFolder.TRASH,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.TRASH,
         );
 
         expect(result).toBe(false);
@@ -142,8 +140,8 @@ describe('shouldSyncFolderByDefault', () => {
 
       it('should not sync junk email folder', () => {
         const result = shouldSyncFolderByDefault(
-          StandardFolder.JUNK,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.JUNK,
         );
 
         expect(result).toBe(false);
@@ -151,7 +149,6 @@ describe('shouldSyncFolderByDefault', () => {
 
       it('should sync custom project folders with ALL_FOLDERS policy', () => {
         const result = shouldSyncFolderByDefault(
-          null,
           MessageFolderImportPolicy.ALL_FOLDERS,
         );
 
@@ -162,8 +159,8 @@ describe('shouldSyncFolderByDefault', () => {
     describe('Gmail user', () => {
       it('should not sync spam folder', () => {
         const result = shouldSyncFolderByDefault(
-          StandardFolder.JUNK,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.JUNK,
         );
 
         expect(result).toBe(false);
@@ -171,8 +168,8 @@ describe('shouldSyncFolderByDefault', () => {
 
       it('should not sync trash folder', () => {
         const result = shouldSyncFolderByDefault(
-          StandardFolder.TRASH,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.TRASH,
         );
 
         expect(result).toBe(false);
@@ -180,8 +177,8 @@ describe('shouldSyncFolderByDefault', () => {
 
       it('should not sync drafts folder', () => {
         const result = shouldSyncFolderByDefault(
-          StandardFolder.DRAFTS,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.DRAFTS,
         );
 
         expect(result).toBe(false);
@@ -189,7 +186,6 @@ describe('shouldSyncFolderByDefault', () => {
 
       it('should sync custom labels with ALL_FOLDERS policy', () => {
         const result = shouldSyncFolderByDefault(
-          null,
           MessageFolderImportPolicy.ALL_FOLDERS,
         );
 
@@ -200,8 +196,8 @@ describe('shouldSyncFolderByDefault', () => {
     describe('IMAP user (generic email provider)', () => {
       it('should sync inbox with ALL_FOLDERS policy', () => {
         const result = shouldSyncFolderByDefault(
-          StandardFolder.INBOX,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.INBOX,
         );
 
         expect(result).toBe(true);
@@ -209,8 +205,8 @@ describe('shouldSyncFolderByDefault', () => {
 
       it('should sync sent folder with ALL_FOLDERS policy', () => {
         const result = shouldSyncFolderByDefault(
-          StandardFolder.SENT,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.SENT,
         );
 
         expect(result).toBe(true);
@@ -218,8 +214,8 @@ describe('shouldSyncFolderByDefault', () => {
 
       it('should not sync trash folder', () => {
         const result = shouldSyncFolderByDefault(
-          StandardFolder.TRASH,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.TRASH,
         );
 
         expect(result).toBe(false);
@@ -227,8 +223,8 @@ describe('shouldSyncFolderByDefault', () => {
 
       it('should not sync spam folder', () => {
         const result = shouldSyncFolderByDefault(
-          StandardFolder.JUNK,
           MessageFolderImportPolicy.ALL_FOLDERS,
+          StandardFolder.JUNK,
         );
 
         expect(result).toBe(false);
@@ -238,15 +234,14 @@ describe('shouldSyncFolderByDefault', () => {
     describe('selective sync mode', () => {
       it('should require manual selection for all folders with SELECTED_FOLDERS policy', () => {
         const inboxResult = shouldSyncFolderByDefault(
-          StandardFolder.INBOX,
           MessageFolderImportPolicy.SELECTED_FOLDERS,
+          StandardFolder.INBOX,
         );
         const sentResult = shouldSyncFolderByDefault(
-          StandardFolder.SENT,
           MessageFolderImportPolicy.SELECTED_FOLDERS,
+          StandardFolder.SENT,
         );
         const customResult = shouldSyncFolderByDefault(
-          null,
           MessageFolderImportPolicy.SELECTED_FOLDERS,
         );
 
@@ -257,16 +252,16 @@ describe('shouldSyncFolderByDefault', () => {
 
       it('should still never sync excluded folders even if user tries to select them', () => {
         const draftsResult = shouldSyncFolderByDefault(
-          StandardFolder.DRAFTS,
           MessageFolderImportPolicy.SELECTED_FOLDERS,
+          StandardFolder.DRAFTS,
         );
         const trashResult = shouldSyncFolderByDefault(
-          StandardFolder.TRASH,
           MessageFolderImportPolicy.SELECTED_FOLDERS,
+          StandardFolder.TRASH,
         );
         const junkResult = shouldSyncFolderByDefault(
-          StandardFolder.JUNK,
           MessageFolderImportPolicy.SELECTED_FOLDERS,
+          StandardFolder.JUNK,
         );
 
         expect(draftsResult).toBe(false);
