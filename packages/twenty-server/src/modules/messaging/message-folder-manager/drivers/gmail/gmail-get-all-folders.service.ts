@@ -29,7 +29,7 @@ export class GmailGetAllFoldersService implements MessageFolderDriver {
     private readonly gmailMessageListFetchErrorHandler: GmailMessageListFetchErrorHandler,
   ) {}
 
-  private shouldSyncByLabelDefault(
+  private shouldSyncLabelByDefault(
     label: gmail_v1.Schema$Label,
     messageFolderImportPolicy: MessageFolderImportPolicy,
   ): boolean {
@@ -100,7 +100,7 @@ export class GmailGetAllFoldersService implements MessageFolderDriver {
           labelNameToIdMap,
         );
 
-        const isSynced = this.shouldSyncByLabelDefault(
+        const isSynced = this.shouldSyncLabelByDefault(
           label,
           messageChannel.messageFolderImportPolicy,
         );
