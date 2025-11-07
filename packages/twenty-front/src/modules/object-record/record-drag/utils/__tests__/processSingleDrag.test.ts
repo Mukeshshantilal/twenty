@@ -1,4 +1,4 @@
-import { processSingleDrag } from '@/object-record/record-drag/shared/utils/processSingleDrag';
+import { processSingleDrag } from '@/object-record/record-drag/utils/processSingleDrag';
 import { type RecordWithPosition } from '@/object-record/utils/computeNewPositionOfDraggedRecord';
 
 describe('processSingleDrag', () => {

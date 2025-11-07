@@ -1,4 +1,4 @@
-import { processMultiDrag } from '@/object-record/record-drag/shared/utils/processMultiDrag';
+import { processMultiDrag } from '@/object-record/record-drag/utils/processMultiDrag';
 import { type RecordWithPosition } from '@/object-record/utils/computeNewPositionOfDraggedRecord';
 
 describe('processMultiDrag', () => {

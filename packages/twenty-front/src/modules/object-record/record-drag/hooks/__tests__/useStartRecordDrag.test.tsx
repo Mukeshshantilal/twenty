@@ -6,12 +6,8 @@ import { RecoilRoot } from 'recoil';
 import { useStartRecordDrag } from '@/object-record/record-drag/hooks/useStartRecordDrag';
 import { draggedRecordIdsComponentState } from '@/object-record/record-drag/states/draggedRecordIdsComponentState';
 import { isMultiDragActiveComponentState } from '@/object-record/record-drag/states/isMultiDragActiveComponentState';
-import { originalSelectionComponentState } from '@/object-record/record-drag/states/originalDragSelectionComponentState';
+import { originalDragSelectionComponentState } from '@/object-record/record-drag/states/originalDragSelectionComponentState';
 import { primaryDraggedRecordIdComponentState } from '@/object-record/record-drag/states/primaryDraggedRecordIdComponentState';
-import { draggedRecordIdsTableComponentState } from '@/object-record/record-drag/table/states/draggedRecordIdsTableComponentState';
-import { isMultiDragActiveTableComponentState } from '@/object-record/record-drag/table/states/isMultiDragActiveTableComponentState';
-import { originalSelectionTableComponentState } from '@/object-record/record-drag/table/states/originalSelectionTableComponentState';
-import { primaryDraggedRecordIdTableComponentState } from '@/object-record/record-drag/table/states/primaryDraggedRecordIdTableComponentState';
 import { useRecoilComponentValue } from '@/ui/utilities/state/component-state/hooks/useRecoilComponentValue';
 
 const createDragStart = (draggableId: string, index: number): DragStart => ({
@@ -48,14 +44,14 @@ describe('useStartRecordDrag', () => {
             instanceId,
           );
           const originalSelection = useRecoilComponentValue(
-            originalSelectionComponentState,
+            originalDragSelectionComponentState,
             instanceId,
           );
 
-          const { startDrag } = useStartRecordDrag('board', instanceId);
+          const { startRecordDrag } = useStartRecordDrag();
 
           return {
-            startDrag,
+            startRecordDrag,
             isMultiDragActive,
             draggedRecordIds,
             primaryDraggedRecordId,
@@ -69,7 +65,7 @@ describe('useStartRecordDrag', () => {
       const selectedRecordIds = ['record-2', 'record-3'];
 
       act(() => {
-        result.current.startDrag(dragStart, selectedRecordIds);
+        result.current.startRecordDrag(dragStart, selectedRecordIds);
       });
 
       expect(result.current.isMultiDragActive).toBe(true);
@@ -96,14 +92,14 @@ describe('useStartRecordDrag', () => {
             instanceId,
           );
           const originalSelection = useRecoilComponentValue(
-            originalSelectionComponentState,
+            originalDragSelectionComponentState,
             instanceId,
           );
 
-          const { startDrag } = useStartRecordDrag('board', instanceId);
+          const { startRecordDrag } = useStartRecordDrag();
 
           return {
-            startDrag,
+            startRecordDrag,
             isMultiDragActive,
             draggedRecordIds,
             primaryDraggedRecordId,
@@ -117,7 +113,7 @@ describe('useStartRecordDrag', () => {
       const selectedRecordIds = ['record-1'];
 
       act(() => {
-        result.current.startDrag(dragStart, selectedRecordIds);
+        result.current.startRecordDrag(dragStart, selectedRecordIds);
       });
 
       expect(result.current.isMultiDragActive).toBe(true);
@@ -144,14 +140,14 @@ describe('useStartRecordDrag', () => {
             instanceId,
           );
           const originalSelection = useRecoilComponentValue(
-            originalSelectionComponentState,
+            originalDragSelectionComponentState,
             instanceId,
           );
 
-          const { startDrag } = useStartRecordDrag('board', instanceId);
+          const { startRecordDrag } = useStartRecordDrag();
 
           return {
-            startDrag,
+            startRecordDrag,
             isMultiDragActive,
             draggedRecordIds,
             primaryDraggedRecordId,
@@ -165,7 +161,7 @@ describe('useStartRecordDrag', () => {
       const selectedRecordIds = ['record-1', 'record-2', 'record-3'];
 
       act(() => {
-        result.current.startDrag(dragStart, selectedRecordIds);
+        result.current.startRecordDrag(dragStart, selectedRecordIds);
       });
 
       expect(result.current.isMultiDragActive).toBe(true);
@@ -200,14 +196,14 @@ describe('useStartRecordDrag', () => {
             instanceId,
           );
           const originalSelection = useRecoilComponentValue(
-            originalSelectionComponentState,
+            originalDragSelectionComponentState,
             instanceId,
           );
 
-          const { startDrag } = useStartRecordDrag('board', instanceId);
+          const { startRecordDrag } = useStartRecordDrag();
 
           return {
-            startDrag,
+            startRecordDrag,
             isMultiDragActive,
             draggedRecordIds,
             primaryDraggedRecordId,
@@ -221,7 +217,7 @@ describe('useStartRecordDrag', () => {
       const selectedRecordIds: string[] = [];
 
       act(() => {
-        result.current.startDrag(dragStart, selectedRecordIds);
+        result.current.startRecordDrag(dragStart, selectedRecordIds);
       });
 
       expect(result.current.isMultiDragActive).toBe(true);
@@ -238,26 +234,26 @@ describe('useStartRecordDrag', () => {
       const { result } = renderHook(
         () => {
           const isMultiDragActive = useRecoilComponentValue(
-            isMultiDragActiveTableComponentState,
+            isMultiDragActiveComponentState,
             instanceId,
           );
           const draggedRecordIds = useRecoilComponentValue(
-            draggedRecordIdsTableComponentState,
+            draggedRecordIdsComponentState,
             instanceId,
           );
           const primaryDraggedRecordId = useRecoilComponentValue(
-            primaryDraggedRecordIdTableComponentState,
+            primaryDraggedRecordIdComponentState,
             instanceId,
           );
           const originalSelection = useRecoilComponentValue(
-            originalSelectionTableComponentState,
+            originalDragSelectionComponentState,
             instanceId,
           );
 
-          const { startDrag } = useStartRecordDrag('table', instanceId);
+          const { startRecordDrag } = useStartRecordDrag();
 
           return {
-            startDrag,
+            startRecordDrag,
             isMultiDragActive,
             draggedRecordIds,
             primaryDraggedRecordId,
@@ -271,7 +267,7 @@ describe('useStartRecordDrag', () => {
       const selectedRecordIds = ['record-2', 'record-3'];
 
       act(() => {
-        result.current.startDrag(dragStart, selectedRecordIds);
+        result.current.startRecordDrag(dragStart, selectedRecordIds);
       });
 
       expect(result.current.isMultiDragActive).toBe(true);
@@ -286,26 +282,26 @@ describe('useStartRecordDrag', () => {
       const { result } = renderHook(
         () => {
           const isMultiDragActive = useRecoilComponentValue(
-            isMultiDragActiveTableComponentState,
+            isMultiDragActiveComponentState,
             instanceId,
           );
           const draggedRecordIds = useRecoilComponentValue(
-            draggedRecordIdsTableComponentState,
+            draggedRecordIdsComponentState,
             instanceId,
           );
           const primaryDraggedRecordId = useRecoilComponentValue(
-            primaryDraggedRecordIdTableComponentState,
+            primaryDraggedRecordIdComponentState,
             instanceId,
           );
           const originalSelection = useRecoilComponentValue(
-            originalSelectionTableComponentState,
+            originalDragSelectionComponentState,
             instanceId,
           );
 
-          const { startDrag } = useStartRecordDrag('table', instanceId);
+          const { startRecordDrag } = useStartRecordDrag();
 
           return {
-            startDrag,
+            startRecordDrag,
             isMultiDragActive,
             draggedRecordIds,
             primaryDraggedRecordId,
@@ -319,7 +315,7 @@ describe('useStartRecordDrag', () => {
       const selectedRecordIds = ['record-1', 'record-2', 'record-3'];
 
       act(() => {
-        result.current.startDrag(dragStart, selectedRecordIds);
+        result.current.startRecordDrag(dragStart, selectedRecordIds);
       });
 
       expect(result.current.isMultiDragActive).toBe(true);

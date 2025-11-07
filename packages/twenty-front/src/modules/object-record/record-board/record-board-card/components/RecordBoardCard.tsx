@@ -5,7 +5,6 @@ import { RecordBoardCardContext } from '@/object-record/record-board/record-boar
 import { isRecordBoardCardActiveComponentFamilyState } from '@/object-record/record-board/states/isRecordBoardCardActiveComponentFamilyState';
 import { isRecordBoardCardFocusedComponentFamilyState } from '@/object-record/record-board/states/isRecordBoardCardFocusedComponentFamilyState';
 import { isRecordBoardCardSelectedComponentFamilyState } from '@/object-record/record-board/states/isRecordBoardCardSelectedComponentFamilyState';
-import { useRecordDragState } from '@/object-record/record-drag/shared/hooks/useRecordDragState';
 
 import { useActiveRecordBoardCard } from '@/object-record/record-board/hooks/useActiveRecordBoardCard';
 import { useFocusedRecordBoardCard } from '@/object-record/record-board/hooks/useFocusedRecordBoardCard';
@@ -16,6 +15,9 @@ import { RecordBoardCardComponentInstanceContext } from '@/object-record/record-
 import { recordBoardCardIsExpandedComponentState } from '@/object-record/record-board/record-board-card/states/recordBoardCardIsExpandedComponentState';
 import { RecordBoardComponentInstanceContext } from '@/object-record/record-board/states/contexts/RecordBoardComponentInstanceContext';
 import { RecordCard } from '@/object-record/record-card/components/RecordCard';
+import { isDraggingRecordComponentState } from '@/object-record/record-drag/states/isDraggingRecordComponentState';
+import { originalDragSelectionComponentState } from '@/object-record/record-drag/states/originalDragSelectionComponentState';
+import { primaryDraggedRecordIdComponentState } from '@/object-record/record-drag/states/primaryDraggedRecordIdComponentState';
 import { useOpenRecordFromIndexView } from '@/object-record/record-index/hooks/useOpenRecordFromIndexView';
 import { useOpenDropdown } from '@/ui/layout/dropdown/hooks/useOpenDropdown';
 import { useScrollWrapperHTMLElement } from '@/ui/utilities/scroll/hooks/useScrollWrapperHTMLElement';
@@ -23,6 +25,7 @@ import { useAvailableComponentInstanceIdOrThrow } from '@/ui/utilities/state/com
 import { useRecoilComponentFamilyState } from '@/ui/utilities/state/component-state/hooks/useRecoilComponentFamilyState';
 import { useRecoilComponentFamilyValue } from '@/ui/utilities/state/component-state/hooks/useRecoilComponentFamilyValue';
 import { useRecoilComponentState } from '@/ui/utilities/state/component-state/hooks/useRecoilComponentState';
+import { useRecoilComponentValue } from '@/ui/utilities/state/component-state/hooks/useRecoilComponentValue';
 import { useSetRecoilComponentState } from '@/ui/utilities/state/component-state/hooks/useSetRecoilComponentState';
 import { useGetCurrentViewOnly } from '@/views/hooks/useGetCurrentViewOnly';
 import styled from '@emotion/styled';
@@ -66,17 +69,27 @@ export const RecordBoardCard = () => {
     RecordBoardComponentInstanceContext,
   );
 
-  const multiDragState = useRecordDragState('board', recordBoardId);
+  const isDraggingRecord = useRecoilComponentValue(
+    isDraggingRecordComponentState,
+  );
+
+  const primaryDraggedRecordId = useRecoilComponentValue(
+    primaryDraggedRecordIdComponentState,
+  );
+
+  const originalDragSelection = useRecoilComponentValue(
+    originalDragSelectionComponentState,
+  );
 
   const isPrimaryMultiDrag =
-    multiDragState?.isDragging &&
-    recordId === multiDragState.primaryDraggedRecordId &&
-    multiDragState.originalSelection.length > 1;
+    isDraggingRecord &&
+    recordId === primaryDraggedRecordId &&
+    originalDragSelection.length > 1;
 
   const isSecondaryDragged =
-    multiDragState?.isDragging &&
-    multiDragState.originalSelection.includes(recordId) &&
-    recordId !== multiDragState.primaryDraggedRecordId;
+    isDraggingRecord &&
+    originalDragSelection.includes(recordId) &&
+    recordId !== primaryDraggedRecordId;
 
   const { currentView } = useGetCurrentViewOnly();
 
@@ -174,7 +187,7 @@ export const RecordBoardCard = () => {
         <StyledCardContainer isPrimaryMultiDrag={isPrimaryMultiDrag}>
           {isPrimaryMultiDrag &&
             Array.from({
-              length: Math.min(5, multiDragState.originalSelection.length - 1),
+              length: Math.min(5, originalDragSelection.length - 1),
             }).map((_, index) => (
               <StyledRecordBoardCardStackCard key={index} offset={index + 1} />
             ))}

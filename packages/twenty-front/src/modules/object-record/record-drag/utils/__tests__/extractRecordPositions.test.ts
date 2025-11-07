@@ -1,6 +1,6 @@
+import { extractRecordPositions } from '@/object-record/record-drag/utils/extractRecordPositions';
 import { type Snapshot } from 'recoil';
 
-import { extractRecordPositions } from '@/object-record/record-drag/shared/utils/extractRecordPositions';
 import { isDefined } from 'twenty-shared/utils';
 
 describe('extractRecordPositions', () => {

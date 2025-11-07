@@ -27,9 +27,9 @@ export const RecordTableBodyNoRecordGroupDragDropContextProvider = ({
     recordTableId,
   );
 
-  const { startDrag } = useStartRecordDrag('table', recordTableId);
-  const { endDrag } = useEndRecordDrag('table', recordTableId);
-  const { processDragOperationWithoutGroup } =
+  const { startRecordDrag } = useStartRecordDrag();
+  const { endRecordDrag } = useEndRecordDrag();
+  const { processTableWithoutGroupRecordDrop } =
     useProcessTableWithoutGroupRecordDrop();
 
   const handleDragStart = useRecoilCallback(
@@ -40,17 +40,17 @@ export const RecordTableBodyNoRecordGroupDragDropContextProvider = ({
           selectedRowIdsSelector,
         );
 
-        startDrag(start, currentSelectedRecordIds);
+        startRecordDrag(start, currentSelectedRecordIds);
       },
-    [selectedRowIdsSelector, startDrag],
+    [selectedRowIdsSelector, startRecordDrag],
   );
 
   const handleDragEnd = useRecoilCallback(
     () => (result: DropResult) => {
-      processDragOperationWithoutGroup(result);
-      endDrag();
+      processTableWithoutGroupRecordDrop(result);
+      endRecordDrag();
     },
-    [endDrag, processDragOperationWithoutGroup],
+    [endRecordDrag, processTableWithoutGroupRecordDrop],
   );
 
   return (

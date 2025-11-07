@@ -5,12 +5,8 @@ import { RecoilRoot, useSetRecoilState } from 'recoil';
 import { useEndRecordDrag } from '@/object-record/record-drag/hooks/useEndRecordDrag';
 import { draggedRecordIdsComponentState } from '@/object-record/record-drag/states/draggedRecordIdsComponentState';
 import { isMultiDragActiveComponentState } from '@/object-record/record-drag/states/isMultiDragActiveComponentState';
-import { originalSelectionComponentState } from '@/object-record/record-drag/states/originalDragSelectionComponentState';
+import { originalDragSelectionComponentState } from '@/object-record/record-drag/states/originalDragSelectionComponentState';
 import { primaryDraggedRecordIdComponentState } from '@/object-record/record-drag/states/primaryDraggedRecordIdComponentState';
-import { draggedRecordIdsTableComponentState } from '@/object-record/record-drag/table/states/draggedRecordIdsTableComponentState';
-import { isMultiDragActiveTableComponentState } from '@/object-record/record-drag/table/states/isMultiDragActiveTableComponentState';
-import { originalSelectionTableComponentState } from '@/object-record/record-drag/table/states/originalSelectionTableComponentState';
-import { primaryDraggedRecordIdTableComponentState } from '@/object-record/record-drag/table/states/primaryDraggedRecordIdTableComponentState';
 import { useRecoilComponentValue } from '@/ui/utilities/state/component-state/hooks/useRecoilComponentValue';
 
 describe('useEndRecordDrag', () => {
@@ -37,7 +33,7 @@ describe('useEndRecordDrag', () => {
             instanceId,
           );
           const originalSelection = useRecoilComponentValue(
-            originalSelectionComponentState,
+            originalDragSelectionComponentState,
             instanceId,
           );
 
@@ -57,15 +53,15 @@ describe('useEndRecordDrag', () => {
             }),
           );
           const setOriginalSelection = useSetRecoilState(
-            originalSelectionComponentState.atomFamily({
+            originalDragSelectionComponentState.atomFamily({
               instanceId,
             }),
           );
 
-          const { endDrag } = useEndRecordDrag('board', instanceId);
+          const { endRecordDrag } = useEndRecordDrag();
 
           return {
-            endDrag,
+            endRecordDrag,
             isMultiDragActive,
             draggedRecordIds,
             primaryDraggedRecordId,
@@ -100,7 +96,7 @@ describe('useEndRecordDrag', () => {
       ]);
 
       act(() => {
-        result.current.endDrag();
+        result.current.endRecordDrag();
       });
 
       expect(result.current.isMultiDragActive).toBe(false);
@@ -117,47 +113,47 @@ describe('useEndRecordDrag', () => {
       const { result } = renderHook(
         () => {
           const isMultiDragActive = useRecoilComponentValue(
-            isMultiDragActiveTableComponentState,
+            isMultiDragActiveComponentState,
             instanceId,
           );
           const draggedRecordIds = useRecoilComponentValue(
-            draggedRecordIdsTableComponentState,
+            draggedRecordIdsComponentState,
             instanceId,
           );
           const primaryDraggedRecordId = useRecoilComponentValue(
-            primaryDraggedRecordIdTableComponentState,
+            primaryDraggedRecordIdComponentState,
             instanceId,
           );
           const originalSelection = useRecoilComponentValue(
-            originalSelectionTableComponentState,
+            originalDragSelectionComponentState,
             instanceId,
           );
 
           const setIsMultiDragActive = useSetRecoilState(
-            isMultiDragActiveTableComponentState.atomFamily({
+            isMultiDragActiveComponentState.atomFamily({
               instanceId,
             }),
           );
           const setDraggedRecordIds = useSetRecoilState(
-            draggedRecordIdsTableComponentState.atomFamily({
+            draggedRecordIdsComponentState.atomFamily({
               instanceId,
             }),
           );
           const setPrimaryDraggedRecordId = useSetRecoilState(
-            primaryDraggedRecordIdTableComponentState.atomFamily({
+            primaryDraggedRecordIdComponentState.atomFamily({
               instanceId,
             }),
           );
           const setOriginalSelection = useSetRecoilState(
-            originalSelectionTableComponentState.atomFamily({
+            originalDragSelectionComponentState.atomFamily({
               instanceId,
             }),
           );
 
-          const { endDrag } = useEndRecordDrag('table', instanceId);
+          const { endRecordDrag } = useEndRecordDrag();
 
           return {
-            endDrag,
+            endRecordDrag,
             isMultiDragActive,
             draggedRecordIds,
             primaryDraggedRecordId,
@@ -192,7 +188,7 @@ describe('useEndRecordDrag', () => {
       ]);
 
       act(() => {
-        result.current.endDrag();
+        result.current.endRecordDrag();
       });
 
       expect(result.current.isMultiDragActive).toBe(false);
