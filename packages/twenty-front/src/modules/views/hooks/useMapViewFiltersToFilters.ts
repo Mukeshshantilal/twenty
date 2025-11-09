@@ -1,13 +1,13 @@
 import { currentUserState } from '@/auth/states/currentUserState';
 import { currentWorkspaceMemberState } from '@/auth/states/currentWorkspaceMemberState';
-import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
-import { type RecordFilter } from '@/object-record/record-filter/types/RecordFilter';
 import { CoreObjectNameSingular } from '@/object-metadata/types/CoreObjectNameSingular';
+import { type RecordFilter } from '@/object-record/record-filter/types/RecordFilter';
+import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
 import { t } from '@lingui/core/macro';
 import { useRecoilValue } from 'recoil';
-import { type CoreViewFilter } from '~/generated/graphql';
 import { ViewFilterOperand } from 'twenty-shared/types';
 import { getFilterTypeFromFieldType, isDefined } from 'twenty-shared/utils';
+import { type CoreViewFilter } from '~/generated/graphql';
 
 import { type ViewFilter } from '../types/ViewFilter';
 import { getFilterableFieldsWithVectorSearch } from '../utils/getFilterableFieldsWithVectorSearch';
