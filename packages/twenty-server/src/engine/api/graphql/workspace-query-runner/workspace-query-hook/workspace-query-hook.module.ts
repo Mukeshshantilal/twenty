@@ -12,6 +12,7 @@ import { DashboardQueryHookModule } from 'src/modules/dashboard/query-hooks/dash
 import { MessagingQueryHookModule } from 'src/modules/messaging/common/query-hooks/messaging-query-hook.module';
 import { MessageChannelQueryHookModule } from 'src/modules/messaging/message-channel-manager/query-hooks/message-channel-query-hook.module';
 import { WorkspaceMemberQueryHookModule } from 'src/modules/workspace-member/query-hooks/workspace-member-query-hook.module';
+import { TaskQueryHookModule } from 'src/modules/task/query-hooks/task-query-hook.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { WorkspaceMemberQueryHookModule } from 'src/modules/workspace-member/que
     BlocklistQueryHookModule,
     MessageChannelQueryHookModule,
     WorkspaceMemberQueryHookModule,
+    TaskQueryHookModule,
     DiscoveryModule,
   ],
   providers: [

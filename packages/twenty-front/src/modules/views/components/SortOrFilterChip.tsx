@@ -112,6 +112,7 @@ type SortOrFilterChipProps = {
   onClick?: () => void;
   testId?: string;
   type: SortOrFilterChipType;
+  isLocked?: boolean;
 };
 
 export const SortOrFilterChip = ({
@@ -123,6 +124,7 @@ export const SortOrFilterChip = ({
   testId,
   onClick,
   type,
+  isLocked = false,
 }: SortOrFilterChipProps) => {
   const theme = useTheme();
 
@@ -146,13 +148,15 @@ export const SortOrFilterChip = ({
           <StyledFilterValue>{labelValue}</StyledFilterValue>
         )}
       </StyledKeyLabelContainer>
-      <StyledDelete
-        variant={variant}
-        onClick={handleDeleteClick}
-        data-testid={'remove-icon-' + testId}
-      >
-        <IconX size={theme.icon.size.sm} stroke={theme.icon.stroke.sm} />
-      </StyledDelete>
+      {!isLocked && (
+        <StyledDelete
+          variant={variant}
+          onClick={handleDeleteClick}
+          data-testid={'remove-icon-' + testId}
+        >
+          <IconX size={theme.icon.size.sm} stroke={theme.icon.stroke.sm} />
+        </StyledDelete>
+      )}
     </StyledChip>
   );
 };

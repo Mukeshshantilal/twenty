@@ -61,6 +61,7 @@ export const EditableFilterChip = ({
       onRemove={onRemove}
       onClick={onClick}
       type="filter"
+      isLocked={recordFilter.isLocked}
     />
   );
 };

@@ -36,9 +36,9 @@ export const useSaveRecordFiltersToViewFilters = () => {
           currentRecordFiltersCallbackState,
         );
 
-        const newViewFilters = currentRecordFilters.map(
-          mapRecordFilterToViewFilter,
-        );
+        const newViewFilters = currentRecordFilters
+          .filter((filter) => !filter.isLocked)
+          .map(mapRecordFilterToViewFilter);
 
         const viewFiltersToCreate = getViewFiltersToCreate(
           currentViewFilters,

@@ -18,6 +18,7 @@ export type RecordFilter = {
   positionInRecordFilterGroup?: number | null;
   label: string;
   subFieldName?: CompositeFieldSubFieldName | null | undefined;
+  isLocked?: boolean;
 };
 
 export type RecordFilterToRecordInputOperand<
